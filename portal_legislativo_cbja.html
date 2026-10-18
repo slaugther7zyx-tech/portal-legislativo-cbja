@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17324d">
+<title>Portal Legislativo CBJA</title>
+<style>
+:root{--navy:#17324d;--blue:#244b6b;--gold:#c7a96b;--bg:#f3f6f8;--ink:#17212b;--muted:#5d6b78;--line:#dce3e8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,var(--navy),var(--blue));color:white;padding:28px 18px 25px;border-bottom:4px solid var(--gold)}
+.wrap{max-width:980px;margin:auto} .brand{font-size:12px;letter-spacing:.16em;font-weight:800;color:#e7d4a7}
+h1{margin:8px 0;font-size:clamp(26px,5vw,38px);line-height:1.12}header p{margin:8px 0 0;color:#e5edf3}
+main{max-width:980px;margin:20px auto;padding:0 14px 36px}
+.searchbox{background:white;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 5px 18px #17324d0c}
+label{display:block;font-size:13px;font-weight:750;margin-bottom:8px}
+input,select{font:inherit;width:100%;padding:13px 12px;border:1px solid #bcc9d2;border-radius:10px;background:white;color:var(--ink)}
+.controls{display:grid;grid-template-columns:1fr;gap:12px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+button{font:inherit;border:1px solid var(--line);background:white;border-radius:999px;padding:9px 13px;cursor:pointer;color:var(--navy);font-weight:700}
+button.active{background:var(--navy);color:white;border-color:var(--navy)}
+.summary{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:20px 2px 12px;color:var(--muted);font-size:14px}
+.list{display:grid;gap:12px}
+.doc{background:white;border:1px solid var(--line);border-radius:14px;padding:16px}
+.doc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.number{font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.04em}
+h2{font-size:18px;margin:6px 0 8px;line-height:1.25}
+.meta{font-size:13px;color:var(--muted);line-height:1.6}
+.status{font-size:11px;font-weight:800;padding:6px 8px;border-radius:999px;white-space:nowrap;background:#e8eef3;color:#244b6b}
+.status.aprovado{background:#e4f4e9;color:#176b39}.status.tramitacao{background:#fff2d6;color:#815500}.status.rejeitado{background:#fde7e7;color:#982d2d}
+.desc{font-size:14px;line-height:1.55;margin:12px 0;color:#34424e}
+.empty{background:white;border:1px dashed #bcc9d2;border-radius:14px;padding:24px;text-align:center;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:0 15px 24px}
+.notice{font-size:12px;color:var(--muted);margin-top:13px;line-height:1.5}
+@media(min-width:650px){.controls{grid-template-columns:2fr 1fr}.doc{padding:19px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="brand">CBJA • PORTAL LEGISLATIVO</div>
+<h1>Leis e Projetos de Lei</h1>
+<p>Consulte documentos legislativos por número, título, autor ou assunto.</p>
+</div></header>
+<main>
+<section class="searchbox" aria-label="Pesquisa de documentos">
+<div class="controls">
+<div><label for="q">Pesquisar documentos</label><input id="q" type="search" placeholder="Ex.: 005/2026, igualdade, nome do autor" autocomplete="off"></div>
+<div><label for="type">Tipo de documento</label><select id="type"><option value="todos">Todos os documentos</option><option value="lei">Leis aprovadas</option><option value="projeto">Projetos de lei</option></select></div>
+</div>
+<div class="filters" aria-label="Filtrar por situação">
+<button class="active" data-status="todos">Todos</button><button data-status="aprovado">Aprovados</button><button data-status="tramitacao">Em tramitação</button><button data-status="rejeitado">Rejeitados</button>
+</div>
+<p class="notice">Portal de consulta pública. Os documentos abaixo são dados iniciais de exemplo e devem ser conferidos e completados pelos administradores antes da divulgação oficial.</p>
+</section>
+<div class="summary"><span id="count">Carregando documentos…</span><span>CBJA Oficial</span></div>
+<section id="results" class="list" aria-live="polite"></section>
+</main>
+<footer>Portal Legislativo CBJA • Confira sempre o texto oficial publicado pela instituição.</footer>
+<script>
+/* ADMINISTRAÇÃO:
+   Para cadastrar um documento, acrescente um novo objeto à lista DOCUMENTOS abaixo.
+   Apenas pessoas com permissão de edição do repositório/site devem alterar este arquivo.
+   Não coloque senhas ou dados pessoais neste arquivo público.
+*/
+const DOCUMENTOS = [
+ {numero:"00006/2026",tipo:"lei",titulo:"Legalidade da Corrida Eleitoral e do Tempo de Divulgação",autor:"Dep. Federal Tino Lindo",situacao:"aprovado",data:"12/10/2026",assunto:"Regras de divulgação eleitoral, igualdade de oportunidade entre chapas e campanha.",texto:"Cadastro inicial baseado nas informações disponíveis. Inserir aqui o texto integral e o parecer oficial."},
+ {numero:"00005/2026",tipo:"lei",titulo:"Igualdade entre os Integrantes e Critérios de Penalidades",autor:"Dep. Federal Tino Lindo",situacao:"aprovado",data:"12/10/2026",assunto:"Igualdade institucional, classificação de infrações e aplicação de penalidades.",texto:"Cadastro inicial baseado nas informações disponíveis. Inserir aqui o texto integral e o parecer oficial."},
+ {numero:"013/2026",tipo:"projeto",titulo:"Integridade Institucional e Prevenção de Fraudes Processuais",autor:"A confirmar",situacao:"tramitacao",data:"",assunto:"Proposta de prevenção de fraudes e irregularidades processuais.",texto:"Projeto listado para organização inicial. Confirmar autoria, texto e situação oficial antes de publicar."},
+ {numero:"017/2026",tipo:"projeto",titulo:"Direito de Recurso e Revisão de Decisões Institucionais",autor:"A confirmar",situacao:"tramitacao",data:"",assunto:"Procedimentos para solicitar revisão de decisões administrativas e disciplinares.",texto:"Projeto listado para organização inicial. Confirmar autoria, texto e situação oficial antes de publicar."},
+ {numero:"A definir/2026",tipo:"projeto",titulo:"Viver do Trabalho",autor:"A confirmar",situacao:"tramitacao",data:"",assunto:"Proposta de calendário de descanso para integrantes dos setores.",texto:"Proposta em elaboração. Confirmar número, autoria e situação oficial antes de publicar."}
+];
+let statusSelecionado="todos";
+const q=document.querySelector("#q"), type=document.querySelector("#type"), results=document.querySelector("#results"), count=document.querySelector("#count");
+function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function statusLabel(s){return s==="aprovado"?"Aprovado":s==="rejeitado"?"Rejeitado":"Em tramitação";}
+function render(){
+ const query=q.value.trim().toLocaleLowerCase("pt-BR");
+ const tipo=type.value;
+ const filtered=DOCUMENTOS.filter(d=>{
+  const hay=[d.numero,d.titulo,d.autor,d.assunto,d.texto].join(" ").toLocaleLowerCase("pt-BR");
+  return (!query||hay.includes(query))&&(tipo==="todos"||d.tipo===tipo)&&(statusSelecionado==="todos"||d.situacao===statusSelecionado);
+ });
+ count.textContent=`${filtered.length} documento(s) encontrado(s)`;
+ if(!filtered.length){results.innerHTML='<div class="empty">Nenhum documento encontrado. Tente outro número, título ou autor.</div>';return;}
+ results.innerHTML=filtered.map(d=>`<article class="doc">
+ <div class="doc-top"><div><div class="number">${escapeHTML(d.tipo==="lei"?"LEI Nº":"PROJETO DE LEI Nº")} ${escapeHTML(d.numero)}</div><h2>${escapeHTML(d.titulo)}</h2></div>
+ <span class="status ${escapeHTML(d.situacao)}">${statusLabel(d.situacao)}</span></div>
+ <div class="meta">Autor: ${escapeHTML(d.autor)}${d.data?" • Data: "+escapeHTML(d.data):""}</div>
+ <p class="desc">${escapeHTML(d.assunto)}</p>
+ <details><summary>Ver observações do cadastro</summary><p class="desc">${escapeHTML(d.texto)}</p></details>
+ </article>`).join("");
+}
+q.addEventListener("input",render);type.addEventListener("change",render);
+document.querySelectorAll("[data-status]").forEach(b=>b.addEventListener("click",()=>{statusSelecionado=b.dataset.status;document.querySelectorAll("[data-status]").forEach(x=>x.classList.toggle("active",x===b));render();}));
+render();
+</script>
+</body>
+</html>
